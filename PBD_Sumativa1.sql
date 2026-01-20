@@ -19,7 +19,7 @@ DECLARE
     v_id_estadocv_emp   EMPLEADO.ID_ESTADO_CIVIL%TYPE;
     v_fecha_contrato    EMPLEADO.FECHA_CONTRATO%TYPE;
     
-    -- CORRECCIÓN 1: Referencia a la tabla correcta (ESTADO_CIVIL)
+    --  Referencia a la tabla correcta (ESTADO_CIVIL)
     v_nombre_estadocv_emp ESTADO_CIVIL.NOMBRE_ESTADO_CIVIL%TYPE; 
 
 BEGIN
@@ -31,7 +31,7 @@ BEGIN
     -- 2. Bucle
     FOR v_id_iterador IN 100..320 LOOP
         BEGIN
-            -- CORRECCIÓN 2: Usamos JOIN para traer datos de ambas tablas
+            --  Usamos JOIN para traer datos de tablas EMPLEADO y ESTADO_CIVIL
             SELECT e.ID_EMP, e.NUMRUN_EMP, e.DVRUN_EMP, e.PNOMBRE_EMP, e.APPATERNO_EMP, 
                    e.FECHA_NAC, e.SUELDO_BASE, e.ID_ESTADO_CIVIL, ec.NOMBRE_ESTADO_CIVIL, e.FECHA_CONTRATO
             INTO   v_id_emp, v_run_emp, v_dvrun_emp, v_nombre_emp, v_appaterno_emp, 
@@ -43,7 +43,7 @@ BEGIN
             -- B. Años trabajados
             v_annios_trabajados := TO_CHAR(TRUNC(MONTHS_BETWEEN(v_fecha_de_proceso, v_fecha_contrato) / 12));
             
-            -- C. Usuario (CORRECCIÓN 3: Ahora usamos v_nombre_estadocv_emp REAL)
+            -- C. Usuario 
             v_usuario := SUBSTR(LOWER(v_nombre_estadocv_emp), 1, 1) || 
                          SUBSTR(v_nombre_emp, 1, 3) || 
                          TO_CHAR(LENGTH(v_nombre_emp)) || 
@@ -123,6 +123,7 @@ BEGIN
     COMMIT;
     DBMS_OUTPUT.PUT_LINE('Proceso finalizado exitosamente.');
 END;
+
 
 
 
